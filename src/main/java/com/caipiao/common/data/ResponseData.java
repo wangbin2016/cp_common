@@ -15,8 +15,9 @@ public class ResponseData<T extends DataBody>  {
 	private String text;
 	private T body;
 
-	public void setResponseStatus(ResponseStatus status) {
+	public void setResponseStatus(ResponseStatus status,T t) {
 		this.code = status.getStatusCode();
 		this.text = status.getStatusText();
+		body = t;
 	}
 }
