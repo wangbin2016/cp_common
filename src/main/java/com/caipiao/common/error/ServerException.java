@@ -10,7 +10,7 @@ public class ServerException extends RuntimeException{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Error errorEntity;
+	ErrorMessage errorEntity;
 	
 	/**
 	 * 取服务异常的接代码
@@ -28,7 +28,7 @@ public class ServerException extends RuntimeException{
 		return errorEntity.getErrorMessage();
 	}
 	
-	public ServerException(Error errorEntity) {
+	public ServerException(ErrorMessage errorEntity) {
 		this.errorEntity = errorEntity;
 	}
 }

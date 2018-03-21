@@ -1,6 +1,6 @@
 package com.caipiao.common.error;
 
-public class ErrorEntity implements Error {
+public class ErrorEntity implements ErrorMessage {
 
 	protected String errorCode;
 	protected String errorMessage;

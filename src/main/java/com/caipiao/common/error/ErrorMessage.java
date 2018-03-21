@@ -5,7 +5,7 @@ package com.caipiao.common.error;
  * @author wangb
  *
  */
-public interface Error {
+public interface ErrorMessage {
 	String getErrorMessage();
 	String getErrorCode();
 }
