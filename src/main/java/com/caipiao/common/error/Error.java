@@ -8,6 +8,4 @@ package com.caipiao.common.error;
 public interface Error {
 	String getErrorMessage();
 	String getErrorCode();
-	
-	
 }
