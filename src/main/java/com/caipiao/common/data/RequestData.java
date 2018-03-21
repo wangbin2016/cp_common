@@ -1,15 +1,21 @@
 package com.caipiao.common.data;
 
 import com.caipiao.common.data.body.DataBody;
-import com.caipiao.common.error.ErrorMessage;
-@lombok.Data
-public class RequestData implements Data {
-	private String code;
-	private String message;
-	private DataBody body;
 
-	public void setError(ErrorMessage error) {
-		this.code = error.getErrorCode();
-		this.message = error.getErrorMessage();
-	}
+/**
+ * 请求接口实体
+ * @author wangb
+ *
+ * @param <T>
+ */
+@lombok.Data
+public class RequestData<T extends DataBody> {
+	/**
+	 * 请求的token
+	 */
+	private String token;
+	/**
+	 * 请求的实体
+	 */
+	private T body;
 }

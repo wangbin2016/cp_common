@@ -1,34 +1,36 @@
 package com.caipiao.common.error;
 
+import com.caipiao.common.data.responsestatus.ResponseStatus;
+
 /**
  * 公共异常接口
+ * 接收一个返回码
  * @author wangb
  *
  */
-public class ServerException extends RuntimeException{
-	/**
-	 * 
-	 */
+public class ServerException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
-	ErrorMessage errorEntity;
-	
+	ResponseStatus responseStatus;
+
 	/**
 	 * 取服务异常的接代码
+	 * 
 	 * @return
 	 */
-	public String getErrorCode() {
-		return errorEntity.getErrorCode();
+	public String getCode() {
+		return responseStatus.getStatusCode();
 	}
-	
+
 	/**
 	 * 取服务异常的信息
+	 * 
 	 * @return
 	 */
-	public String getErrorMessage() {
-		return errorEntity.getErrorMessage();
+	public String getText() {
+		return responseStatus.getStatusText();
 	}
-	
-	public ServerException(ErrorMessage errorEntity) {
-		this.errorEntity = errorEntity;
+
+	public ServerException(ResponseStatus responseStatus) {
+		this.responseStatus = responseStatus;
 	}
 }
