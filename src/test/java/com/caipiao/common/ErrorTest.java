@@ -7,7 +7,7 @@ public class ErrorTest {
 
 	public static void main(String[] args) {
 		try {
-			throw new ServerException(MemberResponseStatus.LOGIN_ERROR_STATUS);
+			throw new ServerException(MemberResponseStatus.LOGIN_ERROR);
 		} catch (Exception e) {
 			if(e instanceof ServerException) {
 				String code = ((ServerException)e).getCode();

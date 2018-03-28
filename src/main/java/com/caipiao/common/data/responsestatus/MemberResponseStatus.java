@@ -10,6 +10,6 @@ public class MemberResponseStatus extends AbstractResponseStatus{
 		this.code = code;
 		this.text = text;
 	}
-	public static MemberResponseStatus NOT_LOGIN_STATUS = new MemberResponseStatus("100001", "输入的帐号或者密码错误");
-	public static MemberResponseStatus LOGIN_ERROR_STATUS = new MemberResponseStatus("100002", "输入的帐号或者密码错误");
+	public static MemberResponseStatus NOT_LOGIN = new MemberResponseStatus("100001", "用户未登录");
+	public static MemberResponseStatus LOGIN_ERROR = new MemberResponseStatus("100002", "帐号或者密码错误");
 }
