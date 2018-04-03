@@ -17,7 +17,7 @@ import redis.clients.jedis.ShardedJedis;
  */
 @Slf4j
 public class RedisUtils {
-	public static int SESSION_DEAD_TIME = 1000 * 1800; // session 失效时间 30分钟
+	public static int SESSION_DEAD_TIME = 1800; // session 失效时间 30分钟
 
 	public static ShardedJedis getSharderJedis() {
 		return RedisClient.getShardedJedis();
