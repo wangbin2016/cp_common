@@ -1,5 +1,8 @@
 package com.caipiao.common.redis;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import redis.clients.jedis.ShardedJedis;
 
 public class RedisClient {
@@ -18,13 +21,27 @@ public class RedisClient {
 	}
 	
 	public static void main(String[] args) {
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("a1", "v1");
 		ShardedJedis jedis =  getShardedJedis();
-		jedis.set("test1", "value1");
-		jedis.close();
+		jedis.hmset("abc", map);
+		jedis.expire("abc", 10);
 		
-		ShardedJedis jedis2 =  getShardedJedis();
-		String value = jedis2.get("test1");
-		jedis2.close();
-		System.out.println(value);
+		for(int i=0;i<100;i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			
+			if(i==8) {
+				jedis.expire("abc", 10);
+			}
+			System.out.println(i);
+			String value = jedis.hget("abc","a1");
+			System.out.println(value);
+		}
+		
+		System.out.println("---");
 	}
 }
