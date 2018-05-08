@@ -16,9 +16,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+
 public class HttpUtil {
 	/**
 	 * 模拟chrome发送请求
@@ -29,7 +28,7 @@ public class HttpUtil {
 		InputStream in = null;
 
 		if (urlString != null && !urlString.trim().startsWith("http:")) {
-			log.info("http tools: 非法请求(" + urlString + ")");
+			//log.info("http tools: 非法请求(" + urlString + ")");
 			return "";
 		}
 		String charset = charsetCode;
@@ -57,7 +56,7 @@ public class HttpUtil {
 
 			}
 
-			@SuppressWarnings("rawtypes")
+			
 			Map headers = connection.getHeaderFields();
 			if (headers.size() > 0) {
 				String response = headers.get(null).toString();
@@ -74,7 +73,7 @@ public class HttpUtil {
 						}
 					}
 				} catch (Exception e) {
-					log.info(e.getMessage() + "");
+					//log.info(e.getMessage() + "");
 				}
 			}
 			if (("gzip").equals(encoding)) {
@@ -104,7 +103,7 @@ public class HttpUtil {
 
 	}
 
-	@SuppressWarnings("unused")
+	
 	static private URLConnection getProxyConnection(String urlString) throws IOException {
 
 		URLConnection connection = null;
@@ -133,7 +132,7 @@ public class HttpUtil {
 		Pattern patternIcaile = Pattern.compile("\\.(icaile)\\.");
 		Matcher matcherIcaile = patternIcaile.matcher(urlString);
 
-		if (false && matcher500.find()) {
+		if (matcher500.find()) {
 			SocketAddress addr = new InetSocketAddress("117.177.250.152", 80);// 代理地址
 			Proxy typeProxy = new Proxy(Proxy.Type.HTTP, addr);
 			connection = url.openConnection(typeProxy);
@@ -141,15 +140,15 @@ public class HttpUtil {
 			SocketAddress addr = new InetSocketAddress("14.153.53.139", 3128);// 代理地址
 			Proxy typeProxy = new Proxy(Proxy.Type.HTTP, addr);
 			connection = url.openConnection(typeProxy);
-		} else if (false && matcherSporttery.find()) {
+		} else if (matcherSporttery.find()) {
 			SocketAddress addr = new InetSocketAddress("58.216.202.149", 8118);// 代理地址
 			Proxy typeProxy = new Proxy(Proxy.Type.HTTP, addr);
 			connection = url.openConnection(typeProxy);
-		} else if (false && matcherKai168.find()) {
+		} else if (matcherKai168.find()) {
 			SocketAddress addr = new InetSocketAddress("60.205.125.201", 8888);// 代理地址
 			Proxy typeProxy = new Proxy(Proxy.Type.HTTP, addr);
 			connection = url.openConnection(typeProxy);
-		} else if (false && matcherIcaile.find()) {
+		} else if (matcherIcaile.find()) {
 			SocketAddress addr = new InetSocketAddress("221.231.109.40", 3128);// 代理地址
 			Proxy typeProxy = new Proxy(Proxy.Type.HTTP, addr);
 			connection = url.openConnection(typeProxy);

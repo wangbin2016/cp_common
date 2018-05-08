@@ -16,12 +16,10 @@ public abstract class AbstractResponseStatus implements ResponseStatus {
 	
 	public AbstractResponseStatus() {}
 	
-	@Override
 	public String getStatusText() {
 		return text;
 	}
 
-	@Override
 	public String getStatusCode() {
 		return code;
 	}

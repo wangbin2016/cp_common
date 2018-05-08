@@ -37,15 +37,15 @@ public class RedisConfig {
 		if (config == null) {
 			config = new JedisPoolConfig();
 			// 最大连接数
-			config.setMaxTotal(Integer.valueOf(properties.getProperty("redis.pool.maxTotal")));
+			config.setMaxTotal(Integer.valueOf(properties.getProperty("redis.pool.maxTotal")).intValue());
 			// 最大空闲连接数
-			config.setMaxIdle(Integer.valueOf(properties.getProperty("redis.pool.maxIdle")));
+			config.setMaxIdle(Integer.valueOf(properties.getProperty("redis.pool.maxIdle")).intValue());
 			// 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间, 默认-1
-			config.setMaxWaitMillis(Long.valueOf(properties.getProperty("redis.pool.maxWaitMillis")));
+			config.setMaxWaitMillis(Long.valueOf(properties.getProperty("redis.pool.maxWaitMillis")).longValue());
 			// 在获取连接的时候检查有效性, 默认false
-			config.setTestOnBorrow(Boolean.valueOf(properties.getProperty("redis.pool.testOnBorrow")));
+			config.setTestOnBorrow(Boolean.valueOf(properties.getProperty("redis.pool.testOnBorrow")).booleanValue());
 			// 在获取返回结果的时候检查有效性, 默认false
-			config.setTestOnReturn(Boolean.valueOf(properties.getProperty("redis.pool.testOnReturn")));
+			config.setTestOnReturn(Boolean.valueOf(properties.getProperty("redis.pool.testOnReturn")).booleanValue());
 		}
 		return config;
 
