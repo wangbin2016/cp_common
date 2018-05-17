@@ -20,8 +20,6 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         <property name="initialSize" value="0" />
         <!-- 连接池最大使用连接数量 -->
         <property name="maxActive" value="20" />
-        <!-- 连接池最大空闲 -->
-        <property name="maxIdle" value="20" />
         <!-- 连接池最小空闲 -->
         <property name="minIdle" value="0" />
         <!-- 获取连接最大等待时间 -->
@@ -60,12 +58,12 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
         value="classpath:me/gacl/mapping/*.xml"指的是classpath(类路径)下me.gacl.mapping包中的所有xml文件
         UserMapper.xml位于me.gacl.mapping包下，这样UserMapper.xml就可以被自动扫描
          -->
-        <property name="mapperLocations" value="classpath:com/caipiao/member/mapping/*.xml" />
+        <property name="mapperLocations" value="classpath:com/caipiao/mapping/*.xml" />
     </bean>
     <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描me.gacl.dao这个包以及它的子包下的所有映射接口类 -->
-        <property name="basePackage" value="com.caipiao.member.dao" />
+        <property name="basePackage" value="com.caipiao" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
     </bean>
     
@@ -114,7 +112,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
     <bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
         <property name="patterns">
             <list>
-                <value>com.caipiao.member.service.*</value>
+                <value>com.caipiao.*</value>
             </list>
         </property>
     </bean>

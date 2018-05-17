@@ -14,7 +14,7 @@
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+		<projectName>cp_common</projectName>
 	</properties>
 
 	<dependencies>
