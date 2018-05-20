@@ -1,6 +1,8 @@
 package com.caipiao.common.redis;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -36,6 +38,36 @@ public class RedisUtils {
 		T t = (T) SerializationUtils.deserialize(sharderJedis.get(key.getBytes()));
 		sharderJedis.close();
 		return t;
+	}
+	
+	public static void setList(String key, Object value) {
+		ShardedJedis sharderJedis = getSharderJedis();
+		setList(key, value, sharderJedis);
+		sharderJedis.close();
+	}
+	
+	public static void setList(String key, Object value,ShardedJedis sharderJedis) {
+		sharderJedis.rpush(key.getBytes(), SerializationUtils.serialize(value));
+	}
+	
+	public static <T> List<T> getList(String key, Object value) {
+		ShardedJedis sharderJedis = getSharderJedis();
+		List<T> tList = getList(key,value,sharderJedis);
+		sharderJedis.close();
+		return tList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> List<T> getList(String key, Object value,ShardedJedis sharderJedis) {
+		List<T> tList = new ArrayList<T>();
+		byte[] keys = key.getBytes();
+		long length = sharderJedis.llen(keys);
+		List<byte[]> list = sharderJedis.lrange(keys, 0, length);
+		for(byte[] obj:list) {
+			T t = (T)SerializationUtils.deserialize(obj);
+			tList.add(t);
+		}
+		return tList;
 	}
 
 	public static void setSession(String sessionKey, String key, Object value) {
@@ -130,16 +162,17 @@ public class RedisUtils {
 		return null;
 	}
 
-	public static Map<String, Object> getMapAll(String mapKey, ShardedJedis sharderJedis) {
+	@SuppressWarnings("unchecked")
+	public static <T> Map<String,T> getMapAll(String mapKey, ShardedJedis sharderJedis) {
 		boolean isNull = sharderJedis == null;
 		if (isNull) {
 			sharderJedis = getSharderJedis();
 		}
 		try {
 			Map<byte[], byte[]> map = sharderJedis.hgetAll(mapKey.getBytes());
-			Map<String, Object> tempMap = new HashMap<String, Object>();
+			Map<String, T> tempMap = new HashMap<String, T>();
 			for (Entry<byte[], byte[]> entry : map.entrySet()) {
-				tempMap.put(new String(entry.getKey()), SerializationUtils.deserialize(entry.getValue()));
+				tempMap.put(new String(entry.getKey()), (T)SerializationUtils.deserialize(entry.getValue()));
 			}
 			return tempMap;
 		} catch (Exception e) {
