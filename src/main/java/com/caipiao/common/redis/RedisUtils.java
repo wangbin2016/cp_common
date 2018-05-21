@@ -39,32 +39,36 @@ public class RedisUtils {
 		sharderJedis.close();
 		return t;
 	}
-	
-	public static void setList(String key, Object value) {
+
+	public static <T> void setList(String key, List<T> value) {
 		ShardedJedis sharderJedis = getSharderJedis();
 		setList(key, value, sharderJedis);
 		sharderJedis.close();
 	}
-	
-	public static void setList(String key, Object value,ShardedJedis sharderJedis) {
-		sharderJedis.rpush(key.getBytes(), SerializationUtils.serialize(value));
+
+	public static <T> void setList(String key, List<T> value, ShardedJedis sharderJedis) {
+		for (int i = 0; i < value.size(); i++) {
+			T t = value.get(i);
+			byte[] obj = SerializationUtils.serialize(t);
+			sharderJedis.rpush(key.getBytes(), obj);
+		}
 	}
-	
-	public static <T> List<T> getList(String key, Object value) {
+
+	public static <T> List<T> getList(String key) {
 		ShardedJedis sharderJedis = getSharderJedis();
-		List<T> tList = getList(key,value,sharderJedis);
+		List<T> tList = getList(key, sharderJedis);
 		sharderJedis.close();
 		return tList;
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public static <T> List<T> getList(String key, Object value,ShardedJedis sharderJedis) {
+	public static <T> List<T> getList(String key, ShardedJedis sharderJedis) {
 		List<T> tList = new ArrayList<T>();
 		byte[] keys = key.getBytes();
 		long length = sharderJedis.llen(keys);
 		List<byte[]> list = sharderJedis.lrange(keys, 0, length);
-		for(byte[] obj:list) {
-			T t = (T)SerializationUtils.deserialize(obj);
+		for (byte[] obj : list) {
+			T t = (T) SerializationUtils.deserialize(obj);
 			tList.add(t);
 		}
 		return tList;
@@ -163,7 +167,7 @@ public class RedisUtils {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> Map<String,T> getMapAll(String mapKey, ShardedJedis sharderJedis) {
+	public static <T> Map<String, T> getMapAll(String mapKey, ShardedJedis sharderJedis) {
 		boolean isNull = sharderJedis == null;
 		if (isNull) {
 			sharderJedis = getSharderJedis();
@@ -172,7 +176,7 @@ public class RedisUtils {
 			Map<byte[], byte[]> map = sharderJedis.hgetAll(mapKey.getBytes());
 			Map<String, T> tempMap = new HashMap<String, T>();
 			for (Entry<byte[], byte[]> entry : map.entrySet()) {
-				tempMap.put(new String(entry.getKey()), (T)SerializationUtils.deserialize(entry.getValue()));
+				tempMap.put(new String(entry.getKey()), (T) SerializationUtils.deserialize(entry.getValue()));
 			}
 			return tempMap;
 		} catch (Exception e) {

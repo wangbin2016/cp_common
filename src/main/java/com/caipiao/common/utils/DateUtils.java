@@ -18,6 +18,7 @@ public class DateUtils {
 	 * 日期格式:yyyy-MM-dd HH:mm:ss
 	 */
 	public static final String yyyyMMdd_HHmmss="yyyy-MM-dd HH:mm:ss";
+	
 	public static Date StringToDate(String dateString, String format) {
 		Date date;
 		try {
@@ -29,5 +30,16 @@ public class DateUtils {
 		}
 
 		return date;
+	}
+	
+	public static String dateToString(Date date,String format) {
+		String dataStr = null;
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			dataStr = sdf.format(date);
+		} catch (Exception e) {
+			log.info("日期格式失败");
+		}
+		return dataStr;
 	}
 }
